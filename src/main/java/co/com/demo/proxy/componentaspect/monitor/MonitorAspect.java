@@ -4,26 +4,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Aspect
 @Component
 //jdk dynamic proxy, cglibproxy
 public class MonitorAspect {
-
-    //antes de
-    // después de
-    // Alrededor/durante la (ejecución/arrojamiento/despacho) JoinPoint
-    // después de todo
-    // PointCut -> JoinPoint
 
 
     private static final Logger log = LoggerFactory.getLogger(MonitorAspect.class);
@@ -33,9 +32,10 @@ public class MonitorAspect {
 
     @Pointcut(value = "execution(* (@co.com.demo.proxy.componentaspect.monitor.Monitoreable *).*(..))")
     public void executeOnEveryMethodOfAClassAnnotatedWith() {
+        //aspect
     }
 
-//SpEl
+    //SpEl
     //firma = Signature (inglish)
     @Before(value = "executeOnEveryMethodOfAClassAnnotatedWith()")
     public void executionBefore(JoinPoint joinPoint) throws JsonProcessingException {
@@ -62,9 +62,23 @@ public class MonitorAspect {
 
     @After(value = "executeOnEveryMethodOfAClassAnnotatedWith()") //finally
     public void executionAfter(JoinPoint joinPoint) {
+
         String targetObject = joinPoint.getSignature().getDeclaringTypeName();
         log.info("En After Target Object: {} ", targetObject);
         //esta mondá va para kinesis
+
+    }
+
+    @Around(value = "executeOnEveryMethodOfAClassAnnotatedWith()")
+    public Object executionAround(ProceedingJoinPoint pjp) throws Throwable {
+        MDC.put("keyCustom", "TX-" + UUID.randomUUID());
+        var request = objectMapper.writeValueAsString(pjp.getArgs());
+        log.info("En Around Request {}", request);
+        var proxyResult = pjp.proceed();
+        var result = objectMapper.writeValueAsString(proxyResult);
+        log.info("En Around Response {}", result);
+        MDC.clear();
+        return proxyResult;
     }
 
 
