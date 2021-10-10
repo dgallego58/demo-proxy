@@ -22,7 +22,7 @@ public class InterfaceAspect {
 
     @Pointcut(value = "execution(* co.com.demo.proxy.pattern.contract.CashService+.*(..))")
     public void onImplementationCashService() {
-//pointcut to execute on every IMPLEMENTED methods of the interface declared as CashService
+//pointcut to execute on every IMPLEMENTED methods for the interface declared as CashService
     }
 
     @Around(value = "onImplementationCashService()")
