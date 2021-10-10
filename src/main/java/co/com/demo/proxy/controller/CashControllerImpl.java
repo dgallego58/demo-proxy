@@ -1,7 +1,7 @@
 package co.com.demo.proxy.controller;
 
-import co.com.demo.proxy.cash.CashService;
 import co.com.demo.proxy.controller.swagger.SwaggerDemo;
+import co.com.demo.proxy.pattern.contract.CashService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

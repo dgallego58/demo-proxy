@@ -1,4 +1,4 @@
-package co.com.demo.proxy.aop.reflection;
+package co.com.demo.proxy.reflection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

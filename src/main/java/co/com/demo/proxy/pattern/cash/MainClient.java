@@ -1,5 +1,6 @@
-package co.com.demo.proxy.cash;
+package co.com.demo.proxy.pattern.cash;
 
+import co.com.demo.proxy.pattern.contract.CashService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

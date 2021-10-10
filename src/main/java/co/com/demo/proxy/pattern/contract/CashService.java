@@ -1,4 +1,4 @@
-package co.com.demo.proxy.cash;
+package co.com.demo.proxy.pattern.contract;
 
 public interface CashService {
 

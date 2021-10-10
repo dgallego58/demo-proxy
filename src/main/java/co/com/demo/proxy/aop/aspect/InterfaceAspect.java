@@ -20,14 +20,14 @@ public class InterfaceAspect {
         this.objectMapper = objectMapper;
     }
 
-    @Pointcut(value = "execution(* co.com.demo.proxy.cash.CashService+.*(..))")
+    @Pointcut(value = "execution(* co.com.demo.proxy.pattern.contract.CashService+.*(..))")
     public void onImplementationCashService() {
 //pointcut to execute on every IMPLEMENTED methods of the interface declared as CashService
     }
 
     @Around(value = "onImplementationCashService()")
     public Object doOnExecution(ProceedingJoinPoint pjp) throws Throwable {
-        var methodInvoked = pjp.getSignature().getDeclaringTypeName();
+        var methodInvoked = pjp.getSignature().getDeclaringTypeName() + pjp.getSignature().getName();
         var jsonArgs = objectMapper.writeValueAsString(pjp.getArgs());
         log.info("Method invoked {} with Given Args: {}", methodInvoked, jsonArgs);
         return pjp.proceed();

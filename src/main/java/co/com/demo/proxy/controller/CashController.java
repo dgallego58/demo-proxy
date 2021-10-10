@@ -1,7 +1,7 @@
 package co.com.demo.proxy.controller;
 
 import co.com.demo.proxy.aop.aspect.Monitoreable;
-import co.com.demo.proxy.cash.CashService;
+import co.com.demo.proxy.pattern.contract.CashService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

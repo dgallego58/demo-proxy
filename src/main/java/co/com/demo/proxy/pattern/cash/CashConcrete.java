@@ -1,6 +1,7 @@
-package co.com.demo.proxy.cash;
+package co.com.demo.proxy.pattern.cash;
 
 import co.com.demo.proxy.aop.aspect.Monitoreable;
+import co.com.demo.proxy.pattern.contract.CashService;
 
 @Monitoreable
 public class CashConcrete implements CashService {
