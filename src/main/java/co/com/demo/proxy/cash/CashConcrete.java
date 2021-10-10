@@ -8,8 +8,22 @@ public class CashConcrete implements CashService {
     @Override
     public String cashIsValidReturnY(String cash) {
         if (cash.contains("Throws")) {
-            throw new RuntimeException("Demo throws");
+            throw new BusinessException("Demo throws");
         }
         return cash.startsWith("Empty") ? "N" : "Y";
+    }
+
+    public static class BusinessException extends RuntimeException {
+        public BusinessException(String message) {
+            super(message);
+        }
+
+        public BusinessException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public BusinessException(Throwable cause) {
+            super(cause);
+        }
     }
 }

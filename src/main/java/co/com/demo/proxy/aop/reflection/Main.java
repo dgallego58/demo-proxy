@@ -1,10 +1,14 @@
 package co.com.demo.proxy.aop.reflection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
         MiClaseA a = new MiClaseA().setAttribute1("MY Atributo como ID");
@@ -13,7 +17,7 @@ public class Main {
         for (Method method : losMetodosDeA) {
             if (method.getName().equals("getAttribute1")) {
                 String idSeteado = (String) method.invoke(a, null);
-                System.out.println("El id seteado es" + idSeteado);
+                log.info("El id establecido es {}", idSeteado);
             }
         }
 
@@ -26,7 +30,7 @@ public class Main {
             }
             if (method.getName().equals("getAttribute1")) {
                 String elNuevovalor = (String) method.invoke(newInstance, null);
-                System.out.println("WithOutConstructor attribute value " + elNuevovalor);
+                log.info("WithOutConstructor attribute value {}", elNuevovalor);
             }
         }
 

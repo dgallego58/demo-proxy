@@ -35,7 +35,8 @@ public class MvcLogInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
+                           Object handler, ModelAndView modelAndView) {
         var braveTraceId = braveTracer.currentSpan().context().traceIdString();
         var sleuthTraceId = TraceIdHelper.operator(tracer).apply(tracer.currentSpan());
         log.info("PostHandle Brave ID {}", braveTraceId);
@@ -51,6 +52,6 @@ public class MvcLogInterceptor implements HandlerInterceptor {
         var sleuthTraceId = TraceIdHelper.operator(tracer).apply(tracer.currentSpan());
         log.info("AfterCompletion BraveId: {}", braveTraceId);
         log.info("AfterCompletion SleuthId: {}", sleuthTraceId);
-        log.info("Over method {}", methodName);
+        log.info("Method called {}", methodName);
     }
 }
