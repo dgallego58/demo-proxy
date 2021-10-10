@@ -1,8 +1,10 @@
 package co.com.demo.proxy.cash;
 
+import co.com.demo.proxy.aop.aspect.Monitoreable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Monitoreable
 public class CashServiceProxy implements CashService {
 
     private static final Logger log = LoggerFactory.getLogger(CashServiceProxy.class);

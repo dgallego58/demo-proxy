@@ -1,4 +1,4 @@
-package co.com.demo.proxy.componentaspect;
+package co.com.demo.proxy.aop.reflection;
 
 
 public class MiClaseA {

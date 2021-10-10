@@ -1,4 +1,4 @@
-package co.com.demo.proxy.componentaspect.monitor;
+package co.com.demo.proxy.aop.aspect;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

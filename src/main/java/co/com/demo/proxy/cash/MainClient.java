@@ -8,12 +8,9 @@ public class MainClient {
     private static final Logger log = LoggerFactory.getLogger(MainClient.class);
 
     public static void main(String[] args) {
-        CashService service = new CashConcrete();
-       /* var result = service.cashIsValidReturnY("Empty $0");
-        log.info("result is " + result);*/
-
-        CashService proxy = new CashServiceProxy(service);
+        CashService concrete = new CashConcrete();
+        CashService proxy = new CashServiceProxy(concrete);
         var result2 = proxy.cashIsValidReturnY("Empty $0");
-        log.info("result is " + result2);
+        log.info("result is {}", result2);
     }
 }

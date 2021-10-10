@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,7 @@ public class SerializationConfiguration {
         return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .locale("es_CO")
                 .deserializers(DATE_TIME_DESERIALIZER)
                 .serializers(DATE_TIME_SERIALIZER);
     }
@@ -67,6 +69,8 @@ public class SerializationConfiguration {
 class PojoWithDate {
     private LocalDateTime localDateTime;
     private LocalDate localDate;
+    private Instant instant;
+    private String string;
 
     public PojoWithDate() {
         //to deserialize
@@ -87,6 +91,24 @@ class PojoWithDate {
 
     public PojoWithDate setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
+        return this;
+    }
+
+    public Instant getInstant() {
+        return instant;
+    }
+
+    public PojoWithDate setInstant(Instant instant) {
+        this.instant = instant;
+        return this;
+    }
+
+    public String getString() {
+        return string;
+    }
+
+    public PojoWithDate setString(String string) {
+        this.string = string;
         return this;
     }
 }
