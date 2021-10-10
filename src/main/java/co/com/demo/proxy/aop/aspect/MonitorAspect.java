@@ -2,7 +2,6 @@ package co.com.demo.proxy.aop.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -24,7 +23,11 @@ public class MonitorAspect {
     private static final Logger log = LoggerFactory.getLogger(MonitorAspect.class);
 
     //jackson 3
-    private final ObjectMapper objectMapper = JsonMapper.builder().build();
+    private final ObjectMapper objectMapper;
+
+    public MonitorAspect(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Pointcut(value = "execution(* (@co.com.demo.proxy.aop.aspect.Monitoreable *).*(..))")
     public void executeOnEveryMethodOfAClassAnnotatedWith() {
