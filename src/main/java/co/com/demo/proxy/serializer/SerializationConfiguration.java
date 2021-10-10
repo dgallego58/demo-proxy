@@ -23,11 +23,12 @@ import java.time.format.ResolverStyle;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Configuration
 public class SerializationConfiguration {
 
-    private static final DateTimeFormatter UTC_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    private static final DateTimeFormatter UTC_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
             .withResolverStyle(ResolverStyle.STRICT);
     private static final LocalDateTimeDeserializer DATE_TIME_DESERIALIZER = new LocalDateTimeDeserializer(UTC_DATE_TIME_FORMAT);
     private static final LocalDateTimeSerializer DATE_TIME_SERIALIZER = new LocalDateTimeSerializer(UTC_DATE_TIME_FORMAT);
@@ -45,9 +46,27 @@ public class SerializationConfiguration {
     @RestController
     public static class CustomDateController {
 
+        /**
+         * <pre>
+         *     {
+         *   "localDateTime": "2021-10-10 17:06:45",
+         *   "localDate": "2021-02-28",
+         *   "instant": "2021-10-10T17:06:15Z",
+         *   "string": "demo"
+         * }
+         * </pre>
+         *
+         * @param pojo
+         * @return
+         */
         @PostMapping("/pojito")
         public ResponseEntity<Optional<PojoWithDate>> elPojito(@RequestBody PojoWithDate pojo) {
             return ResponseEntity.ok(Optional.ofNullable(pojo));
+        }
+
+        @PostMapping("/pojitos")
+        public ResponseEntity<Stream<PojoWithDate>> losPojitos(@RequestBody PojoWithDate pojo) {
+            return ResponseEntity.ok(Stream.of(pojo));
         }
     }
 
@@ -95,7 +114,7 @@ class PojoWithDate {
     }
 
     public Instant getInstant() {
-        return instant;
+        return instant == null ? Instant.now() : instant;
     }
 
     public PojoWithDate setInstant(Instant instant) {
